@@ -194,21 +194,30 @@ def fn2():
                     inner join df_domain as d on d.Id = c.Domain 
                     left join df_option as e on e.Id = b.Option
                     where b.Question = {row['id']}
+                ),
+                T2 AS(
+                    SELECT 
+                        Option,
+                        case 
+                            when Rank=1 then '#72d8ff'
+                            when Rank=2 then '#b5e6a2'
+                            when Rank=3 then '#daf2d0'
+                            when Rank=4 then '#ffff47'
+                            when Rank=5 then '#fd5454'
+                        end as Color,
+                        Rank,
+                        count(*) as ResponderCount
+                    FROM T
+                    GROUP BY Option
+                    --ORDER BY Color, Option ASC;
                 )
-                SELECT 
-                    Option,
-                    case 
-                        when Rank=1 then '#72d8ff'
-                        when Rank=2 then '#b5e6a2'
-                        when Rank=3 then '#daf2d0'
-                        when Rank=4 then '#ffff47'
-                        when Rank=5 then '#fd5454'
-                    end as Color,
-                    Rank,
-                    count(*) as ResponderCount
-                FROM T
-                GROUP BY Option
-                ORDER BY Color, Option ASC;
+                SELECT *
+                FROM T2
+                ORDER BY CASE WHEN Color = '#72d8ff' THEN 1
+                     WHEN Color = '#b5e6a2' THEN 2
+                     WHEN Color = '#daf2d0' THEN 3
+                     WHEN Color = '#ffff47' THEN 4
+                     WHEN Color = '#fd5454' THEN 5 ELSE '' END;
                 """
             )
 
