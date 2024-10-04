@@ -92,7 +92,7 @@ def fn2(id_domain):
 
         fig = px.bar(
             _df,
-            x="Rank",
+            x="Option",
             y="ResponderCount",
             color="Color",
             color_discrete_map="identity",
