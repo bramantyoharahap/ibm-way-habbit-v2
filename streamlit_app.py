@@ -252,8 +252,10 @@ def fn2():
                 color_discrete_map="identity",
                 text_auto=False,
             )
+            
+            respondercount = sqldf("select count(*) as responderCount from df_response_header")
 
-            fig.update_yaxes(range=[0, 100])
+            fig.update_yaxes(range=[0, respondercount])
             st.plotly_chart(fig)
             # print(_df)
             # st.bar_chart(_df, x="Rank", y="ResponderCount", color="Color", stack=True)`
