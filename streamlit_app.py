@@ -209,7 +209,8 @@ def fn2():
                             when Rank=5 then '#fd5454'
                         end as Color,
                         Rank,
-                        count(*) as ResponderCount
+                        count(*) as ResponderCount,
+                        ROUND(count(*)/{float(respondercount)}*100, 2)||'%' as Percentage
                     FROM T
                     GROUP BY Option
                     --ORDER BY Color, Option ASC;
@@ -255,6 +256,7 @@ def fn2():
                 color="Color",
                 color_discrete_map="identity",
                 text_auto=False,
+                text="Percentage"
             )
 
             fig.update_yaxes(range=[0, respondercount], dtick=2)
